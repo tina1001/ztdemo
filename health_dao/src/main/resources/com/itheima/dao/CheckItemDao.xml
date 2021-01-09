@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.dao.CheckItemDao">
+
+    <!--查询所有检查项（不分页）-->
+    <select id="findAllCheckitem" resultType="com.itheima.pojo.CheckItem">
+        select * from t_checkitem
+    </select>
+
+    <!--新增检查项-->
+    <insert id="addCheckItem" parameterType="com.itheima.pojo.CheckItem">
+        insert into t_checkitem(code,name,sex,age,price,type,remark,attention) values (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
+    </insert>
+
+    <!--查询所有检查项（分页）-->
+    <select id="findPage" parameterType="string" resultType="com.itheima.pojo.CheckItem">
+        select * from t_checkitem
+        <where>
+            <if test="value!=null and value.length>0">
+                code like #{queryString} or name like #{queryString}
+            </if>
+        </where>
+    </select>
+
+    <!--编辑检查项-->
+    <!--1.根据id回显该检查项数据-->
+    <select id="findCheckitemById" parameterType="int" resultType="com.itheima.pojo.CheckItem">
+        select * from t_checkitem where id=#{checkItemId}
+    </select>
+    <!--2.修改检查项数据-->
+    <!--注意属性类型：price是float类型，没有length属性，所以不判断长度-->
+    <update id="editCheckItem" parameterType="com.itheima.pojo.CheckItem">
+        update t_checkitem
+        <set>
+            <if test="code!=null and code.length>0">
+            code=#{code},
+            </if>
+            <if test="name!=null and name.length>0">
+            name=#{name},
+            </if>
+            <if test="sex!=null and sex.length>0">
+            sex=#{sex},
+            </if>
+            <if test="age!=null and age.length>0">
+            age=#{age},
+            </if>
+            <if test="price!=null">
+            price=#{price},
+            </if>
+            <if test="type!=null and type.length>0">
+            type=#{type},
+            </if>
+            <if test="remark!=null and remark.length>0">
+            remark=#{remark},
+            </if>
+            <if test="attention!=null and attention.length>0">
+            attention=#{attention}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--删除检查项-->
+    <!--1. 根据检查项id查询，检查项id在中间表中的数量-->
+    <select id="findCountByCheckItemId" parameterType="int" resultType="int">
+        select count(1) from t_checkgroup_checkitem where checkitem_id=#{checkItemId}
+    </select>
+    <!--根据id删除检查项-->
+    <delete id="deleteCheckitemById" parameterType="int">
+        delete from t_checkitem where id=#{checkItemId}
+    </delete>
+</mapper>

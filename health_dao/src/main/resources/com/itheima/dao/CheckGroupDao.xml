@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.dao.CheckGroupDao">
+    <!--新增 检查组-->
+    <!--1.插入检查组表(添加后查询检查组id)-->
+    <insert id="addCheckgroup" parameterType="com.itheima.pojo.CheckGroup">
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_checkgroup (code,name,helpCode,sex,remark,attention)
+       values (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
+    </insert>
+    <!--2.插入中间表(检查组id和对应的检查项ids)-->
+    <insert id="addCheckGroupIdAndCheckitemId" parameterType="map">
+        insert into t_checkgroup_checkitem (checkgroup_id,checkitem_id)values (#{checkGroupId},#{checkitemId})
+    </insert>
+
+    <!--查询所有检查组 （分页）-->
+    <select id="findPage" parameterType="string" resultType="com.itheima.pojo.CheckGroup">
+        select * from t_checkgroup
+        <where>
+            <if test="value!=null and value.length>0">
+                code like #{queryString} or name like #{queryString}
+            </if>
+        </where>
+    </select>
+
+    <!--编辑 检查组-->
+    <!--1.根据id回显检查组信息-->
+    <select id="findCheckgroupById"  parameterType="int" resultType="com.itheima.pojo.CheckGroup">
+        select * from t_checkgroup where id=#{checkgroupId}
+    </select>
+    <!--2.通过检查组id，回显检查项列表复选框-->
+    <select id="findCheckitemIdsByGroupId" resultType="int">
+     select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{checkgroupId}
+    </select>
+    <!--3.删除旧的表关系-->
+    <delete id="deleteCheckItemIdsAndCheckGroupId" parameterType="int">
+      delete from t_checkgroup_checkitem where checkgroup_id = #{checkGroupId}
+    </delete>
+    <!--4.更新检查组-->
+    <update id="editCheckgroup" parameterType="com.itheima.pojo.CheckGroup">
+        update t_checkgroup
+        <set>
+            <if test="code!=null and code.length>0">
+                code=#{code},
+            </if>
+            <if test="name!=null and name.length>0">
+                name=#{name},
+            </if>
+            <if test="helpCode!=null and helpCode.length>0">
+                helpCode=#{helpCode},
+            </if>
+            <if test="sex!=null and sex.length>0">
+                sex=#{sex},
+            </if>
+            <if test="remark!=null and remark.length>0">
+                remark=#{remark},
+            </if>
+            <if test="attention!=null and attention.length>0">
+                attention=#{attention},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--删除 检查组-->
+    <!--1.通过检查组id，查询检查组与套餐的中间表数据-->
+    <select id="selectCheckGroupIdCount" parameterType="int" resultType="int">
+        select count(1) from t_setmeal_checkgroup where checkgroup_id=#{checkGroupId}
+    </select>
+
+    <!--2.通过检查组id，删除检查组信息-->
+    <delete id="deleteCheckGroupIdById" parameterType="int">
+        delete from t_checkgroup where id=#{checkGroupId}
+    </delete>
+    <!--查询所有 检查组 不分页-->
+    <select id="findAllCheckgroup" resultType="com.itheima.pojo.CheckGroup">
+        select * from t_checkgroup
+    </select>
+</mapper>

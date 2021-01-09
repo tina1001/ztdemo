@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="elementui/index.css">
+    <script src="elementui/vue.js"></script>
+    <script src="elementui/index.js"></script>
+</head>
+<body>
+<!--显示组件容器-->
+<div id="app">
+
+
+    <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b">
+        <el-submenu index="1">
+            <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>预约管理</span>
+            </template>
+            <el-menu-item-group>
+                <el-menu-item index="1-1">预约列表</el-menu-item>
+                <el-menu-item index="1-2">预约设置</el-menu-item>
+                <el-menu-item index="1-3">套餐管理</el-menu-item>
+                <el-menu-item index="1-4">检查组管理</el-menu-item>
+                <el-menu-item index="1-5">检查项管理</el-menu-item>
+            </el-menu-item-group>
+        </el-submenu>
+
+    </el-menu>
+
+
+
+</div>
+
+</body>
+</html>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods: {  //js:5 =>js 6
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            }
+        }
+    })
+</script>
