@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="health_service-1.0-SNAPSHOT.war">
+    <root id="archive" name="Service.war">
       <element id="artifact" artifact-name="health_service:war exploded" />
     </root>
   </artifact>

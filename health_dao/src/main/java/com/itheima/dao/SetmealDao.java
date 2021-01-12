@@ -47,4 +47,12 @@ public interface SetmealDao {
     void editSetmeal(Setmeal setmeal);
 
     void deleteSetmealIdCheckgroupIds(Integer setmealId);
+    /*
+     * 查询所有套餐  不分页
+     */
+    List<Setmeal> findAll();
+    /*
+     * 查询套餐详情
+     */
+    Setmeal findDetailById(int id);
 }

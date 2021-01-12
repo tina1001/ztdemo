@@ -25,4 +25,5 @@
     <!--发布服务@Service-->
     <dubbo:annotation package="com.itheima.service"/>
 
+    <import resource="classpath:applicationContext-tx.xml"/>
 </beans>

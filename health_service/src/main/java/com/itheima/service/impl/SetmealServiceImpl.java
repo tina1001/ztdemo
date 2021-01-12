@@ -114,6 +114,20 @@ public class SetmealServiceImpl implements SetmealService {
         // 添加套餐id检查组ids到中间表
         addSetmealIdCheckgroupIds(checkgroupIds, setmealId);
     }
+    /*
+    * 查询所有套餐  不分页
+    */
+    @Override
+    public List<Setmeal> findAll() {
+        return setmealDao.findAll();
+    }
+    /*
+     * 查询套餐详情
+     */
+    @Override
+    public Setmeal findDetailById(int id) {
+        return setmealDao.findDetailById(id);
+    }
 
 
 }

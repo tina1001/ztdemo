@@ -22,4 +22,8 @@ public interface SetmealService {
     List<Integer> findCheckGroupIdsBySetmealId(int setmealId);
 
     void editSetmeal(Setmeal setmeal, Integer[] checkgroupIds);
+
+    List<Setmeal> findAll();
+
+    Setmeal findDetailById(int id);
 }
