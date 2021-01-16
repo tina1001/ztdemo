@@ -81,6 +81,7 @@
         left join t_checkitem ci on cc.checkitem_id=ci.id
         where s.id=#{id}
     </select>
+
     <resultMap id="setmealDetailResultMap" type="com.itheima.pojo.Setmeal">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
@@ -99,4 +100,8 @@
             </collection>
         </collection>
     </resultMap>
+    <!--通过id查询套餐信息(预约提交界面)-->
+    <select id="findById" parameterType="int" resultType="com.itheima.pojo.Setmeal">
+        select * from t_setmeal where id=#{id}
+    </select>
 </mapper>

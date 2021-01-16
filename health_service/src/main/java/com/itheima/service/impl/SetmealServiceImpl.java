@@ -129,5 +129,11 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealDao.findDetailById(id);
     }
 
-
+    /*
+     * 通过id查询套餐信息(预约提交界面)
+     */
+    @Override
+    public Setmeal findById(int id) {
+        return setmealDao.findById(id);
+    }
 }

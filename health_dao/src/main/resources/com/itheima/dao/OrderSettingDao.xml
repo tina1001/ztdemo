@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.OrderSettingDao">
+<!--批量存入预约数据-->
+    <!--1.通过预约日期，查询表中可预约人数是否存在-->
+    <!--日期类型为：DATE-->
+    <select id="findByOrderDate" parameterType="date" resultType="com.itheima.pojo.OrderSetting">
+        select * from t_ordersetting where orderDate=#{orderDate,jdbcType=DATE}
+    </select>
+    <!--2.插入数据-->
+    <insert id="addOrderSetting" parameterType="com.itheima.pojo.OrderSetting">
+         insert into t_ordersetting (orderDate,number,reservations)
+        values (#{orderDate,jdbcType=DATE},#{number},#{reservations})
+    </insert>
+    <!--3.根据预约日期更新可预约人数-->
+    <update id="updateNumber" parameterType="com.itheima.pojo.OrderSetting">
+        update t_ordersetting set number = #{number} where orderDate=#{orderDate,jdbcType=DATE}
+    </update>
+
+    <!--[日历组件显示预约数据]: 通过月份查询预约设置信息-->
+    <!--
+        CAST()函数: 用于将某种数据类型的表达式显式转换为另一种数据类型。参数是一个表达式，它包括用AS关键字，分隔的源值和目标数据类型。
+        AS后接要转换成什么数据类型？
+            整数 : SIGNED
+            字符型，可带参数 : CHAR()
+            日期 : DATE
+            时间: TIME
+        DATE_FORMAT()函数:
+        DATE_FORMAT(date格式化的有效日期值，format由预定义的说明符组成的格式字符串)
+        '%d' :表示一个月之中的第几天,如果是1个数字(小于10)，那么一个月之中的第几天表示为加前导加0， 如：01, 02
+     -->
+    <select id="getOrderSettingByMonth" parameterType="string" resultType="map">
+        select CAST(DATE_FORMAT(orderdate,'%d') AS SIGNED) date,number,reservations
+        From t_ordersetting where orderDate like #{date}
+    </select>
+
+    <!--根据预约日期，更新已预约人数+1-->
+    <!-- &lt; 小于号  -->
+    <update id="editReservationsByOrderDate" parameterType="com.itheima.pojo.OrderSetting">
+        update t_ordersetting set reservations = reservations+1 where orderDate = #{orderDate,jdbcType=DATE}
+        and reservations &lt; number
+    </update>
+</mapper>

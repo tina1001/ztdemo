@@ -55,4 +55,8 @@ public interface SetmealDao {
      * 查询套餐详情
      */
     Setmeal findDetailById(int id);
+    /*
+     * 通过id查询套餐信息(预约提交界面)
+     */
+    Setmeal findById(int id);
 }

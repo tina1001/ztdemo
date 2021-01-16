@@ -1,4 +1,4 @@
-package com.itheima.health.controller;
+package com.itheima.mobile.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.constant.MessageConstant;
@@ -38,7 +38,7 @@ public class SetmealMobileController {
         return new Result(true, MessageConstant.GET_SETMEAL_LIST_SUCCESS,setmealList);
     }
     /*
-    * 查询套餐详情
+    * 查询套餐详情（套餐详情页）
     */
     @GetMapping("/findDetailById")
     public Result findDetailById(int id){
@@ -48,6 +48,14 @@ public class SetmealMobileController {
         setmeal.setImg(QiNiuUtils.DOMAIN + setmeal.getImg());
         return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
     }
-
+    /*
+     * 通过id查询套餐信息(预约提交界面)
+     */
+    @GetMapping("/findById")
+    public Result findById(int id){
+        Setmeal setmeal = setmealService.findById(id);
+        setmeal.setImg(QiNiuUtils.DOMAIN+setmeal.getImg());
+        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
+    }
 
 }

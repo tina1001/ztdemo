@@ -11,7 +11,7 @@
 
     <artifactId>health_common</artifactId>
     <dependencies>
-        <!-- 阿里云短信   -->
+        <!-- 阿里云短信  -->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
@@ -20,7 +20,7 @@
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
         </dependency>
-        <!--   分页助手     -->
+        <!--  分页助手  -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>

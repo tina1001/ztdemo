@@ -15,6 +15,7 @@
         <script src="../plugins/vue/vue.js"></script>
         <script src="../plugins/vue/axios-0.18.0.js"></script>
         <script>
+            // 订单的id
             var id = getUrlParam("orderId");
         </script>
     </head>
@@ -66,8 +67,12 @@
                 orderInfo:{}
             },
             mounted(){
-                axios.post("/order/findById.do?id=" + id).then((response) => {
-                    this.orderInfo = response.data.data;
+                axios.get("/order/findById.do?id=" + id).then((response) => {
+                    if(response.data.flag){
+                        this.orderInfo = response.data.data;
+                    }else{
+                        alert(response.data.message);
+                    }
                 });
             }
         });
